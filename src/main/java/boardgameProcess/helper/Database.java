@@ -1,4 +1,4 @@
-package boardgameProcess;
+package boardgameProcess.helper;
 
 import org.h2.jdbcx.JdbcConnectionPool;
 

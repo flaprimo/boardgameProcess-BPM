@@ -14,6 +14,7 @@ package boardgameProcess;
 
 import javax.servlet.ServletContextListener;
 
+import boardgameProcess.helper.UserGenerator;
 import org.camunda.bpm.application.PostDeploy;
 import org.camunda.bpm.application.ProcessApplication;
 import org.camunda.bpm.application.impl.ServletProcessApplication;
@@ -41,7 +42,7 @@ import org.camunda.bpm.engine.ProcessEngine;
  *
  */
 @ProcessApplication
-public class boardgameProcessApplication extends ServletProcessApplication {
+public class BoardgameProcessApplication extends ServletProcessApplication {
 
   /**
    * The {@literal @}PostDeploy method is invoked when the deployment of all BPMN 2.0 processes is complete.
@@ -49,6 +50,9 @@ public class boardgameProcessApplication extends ServletProcessApplication {
    */
   @PostDeploy
   public void startProcessInstance(ProcessEngine processEngine) {
+
+    // create default user
+    UserGenerator.createDefaultUsers(processEngine);
 
     // start a new instance of our process
     processEngine.getRuntimeService()
