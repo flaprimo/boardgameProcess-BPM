@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.logging.Logger;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 
 public class Email {
@@ -21,8 +20,15 @@ public class Email {
             properties.load(getClass().getClassLoader().getResourceAsStream("email.properties"));
             properties.put("mail.smtp.auth", "true");
 
-            Authenticator authenticator = new SMTPAuthenticator();
-            session = Session.getDefaultInstance(properties, authenticator);
+            session = Session.getInstance(
+                    properties,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(
+                                    properties.getProperty("mail.smtp.user"),
+                                    properties.getProperty("mail.smtp.pass"));
+                        }
+                    });
 
             LOGGER.info("\n\n\n"+Email.class.getName() +" - email created SUCCESSFUL\n\n\n");
         } catch (Exception e) {
@@ -33,15 +39,6 @@ public class Email {
 
     public static Email getInstance() {
         return Email.INSTANCE;
-    }
-
-    private class SMTPAuthenticator extends javax.mail.Authenticator {
-        public PasswordAuthentication getPasswordAuthentication() {
-            String username = properties.getProperty("mail.smtp.user");
-            String password = properties.getProperty("mail.smtp.pass");
-
-            return new PasswordAuthentication(username, password);
-        }
     }
 
     public void sendEmail(String to, String from, String subject, String content) {
