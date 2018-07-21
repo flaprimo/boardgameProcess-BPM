@@ -5,7 +5,7 @@
       <bpmn:outgoing>SequenceFlow_1wzbdba</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1wzbdba" sourceRef="StartEvent_1" targetRef="Task_1n8l2aq" />
-    <bpmn:serviceTask id="Task_1n8l2aq" name="Ye Service Task" camunda:class="boardgameProcess.servlet.YeServiceTask">
+    <bpmn:serviceTask id="Task_1n8l2aq" name="Ye Service Task" camunda:class="boardgameProcess.task.YeServiceTask">
       <bpmn:incoming>SequenceFlow_1wzbdba</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16iejl1</bpmn:outgoing>
     </bpmn:serviceTask>

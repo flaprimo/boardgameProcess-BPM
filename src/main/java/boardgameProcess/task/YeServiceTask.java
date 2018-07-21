@@ -10,10 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package boardgameProcess.servlet;
+package boardgameProcess.task;
 
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
+import boardgameProcess.Database;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.model.bpmn.instance.FlowElement;
@@ -27,7 +30,8 @@ import org.camunda.bpm.model.bpmn.instance.FlowElement;
  */
 public class YeServiceTask implements JavaDelegate {
 
-  public final static Logger LOGGER = Logger.getLogger(YeServiceTask.class.getName());
+  private final static Logger LOGGER = Logger.getLogger(YeServiceTask.class.getName());
+  private static Database database = Database.INSTANCE;
 
   /**
    * this method will be invoked by the process engine when the service task is executed.
@@ -37,9 +41,17 @@ public class YeServiceTask implements JavaDelegate {
     // use camunda model API to get current BPMN element
     FlowElement serviceTask = execution.getBpmnModelElementInstance();
 
+    // query
+    List<Map<String, Object>> results = database.query("SELECT * FROM Products");
+
+    for (Map<String, Object> row:results) {
+      System.out.print("\n");
+      for (Map.Entry<String, Object> rowEntry : row.entrySet()) {
+        System.out.print(rowEntry.getKey() + " = " + rowEntry.getValue() + ", ");
+      }
+    }
+
     // log status
-    LOGGER.info("\n\n\nYEEEE Service Task '"+serviceTask.getName() +"' is invoke-d!\n\n\n");
-
+    LOGGER.info("\n\n\nYEEEE Service Task '"+serviceTask.getName() +"' is eddaje!\n\n\n");
   }
-
 }
