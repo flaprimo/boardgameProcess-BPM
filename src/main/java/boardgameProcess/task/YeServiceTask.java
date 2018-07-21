@@ -12,12 +12,16 @@
  */
 package boardgameProcess.task;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import boardgameProcess.helper.Database;
 import boardgameProcess.helper.Email;
+import boardgameProcess.helper.Rest;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.model.bpmn.instance.FlowElement;
@@ -34,6 +38,7 @@ public class YeServiceTask implements JavaDelegate {
   private final static Logger LOGGER = Logger.getLogger(YeServiceTask.class.getName());
   private static Database database = Database.getInstance();
   private static Email email = Email.getInstance();
+  private static Rest rest = Rest.getInstance();
 
   /**
    * this method will be invoked by the process engine when the service task is executed.
@@ -57,6 +62,11 @@ public class YeServiceTask implements JavaDelegate {
             "Hi!\n" +
                     "we are sorry to inform you that the order for your game has been cancelled!\n" +
                     "Sincerely,\nYour favorite boardgame shop!");
+
+//    ArrayList<NameValuePair> params = new ArrayList<NameValuePair>(2);
+//    params.add(new BasicNameValuePair("param-1", "Hello!"));
+    String response = rest.post("test", null);
+    System.out.println(response);
 
     // log status
     LOGGER.info("\n\n\nYEEEE Service Task '"+serviceTask.getName() +"' is eddaje!\n\n\n");

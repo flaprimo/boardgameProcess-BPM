@@ -3,34 +3,26 @@ package boardgameProcess.helper;
 import org.h2.jdbcx.JdbcConnectionPool;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class Database {
     private final static Logger LOGGER = Logger.getLogger(Database.class.getName());
-
-    private static final String DATABASE_DRIVER = "org.h2.Driver";
-    private static final String DATABASE_CONNECTION = "jdbc:h2:mem:boardgameProcess.db";
-    private static final String DATABASE_USER = "demo";
-    private static final String DATABASE_PASSWORD = "demo";
+    private final static Database INSTANCE = new Database();
 
     private static JdbcConnectionPool connectionPool;
 
-    private final static Database INSTANCE = new Database();
-
     private Database() {
         try {
-            Class.forName(DATABASE_DRIVER);
-        } catch (ClassNotFoundException e) {
-            LOGGER.severe("\n\n\n" + Database.class.getName() + " - database class name lookup FAILURE\n");
-            e.printStackTrace();
-        }
-        try {
+            Properties properties = System.getProperties();
+            properties.load(getClass().getClassLoader().getResourceAsStream("database.properties"));
+
+            Class.forName(properties.getProperty("database.driver"));
+
             connectionPool = JdbcConnectionPool.create(
-                    DATABASE_CONNECTION, DATABASE_USER, DATABASE_PASSWORD);
+                    properties.getProperty("database.connection"),
+                    properties.getProperty("database.user"),
+                    properties.getProperty("database.password"));
         } catch (Exception e) {
             LOGGER.severe("\n\n\n" + Database.class.getName() + " - database connection pool creation FAILURE\n");
             e.printStackTrace();

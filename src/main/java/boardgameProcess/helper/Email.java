@@ -8,11 +8,10 @@ import javax.mail.PasswordAuthentication;
 
 public class Email {
     private final static Logger LOGGER = Logger.getLogger(Database.class.getName());
+    private final static Email INSTANCE = new Email();
 
     private Properties properties;
     private Session session;
-
-    private final static Email INSTANCE = new Email();
 
     private Email() {
         try {
