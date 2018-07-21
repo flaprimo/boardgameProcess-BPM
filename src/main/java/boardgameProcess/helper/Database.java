@@ -19,25 +19,31 @@ public class Database {
 
     private static JdbcConnectionPool connectionPool;
 
-    public final static Database INSTANCE = new Database();
+    private final static Database INSTANCE = new Database();
 
     private Database() {
         try {
             Class.forName(DATABASE_DRIVER);
         } catch (ClassNotFoundException e) {
-            System.out.println(e.toString());
+            LOGGER.severe("\n\n\n" + Database.class.getName() + " - database class name lookup FAILURE\n");
+            e.printStackTrace();
         }
         try {
             connectionPool = JdbcConnectionPool.create(
                     DATABASE_CONNECTION, DATABASE_USER, DATABASE_PASSWORD);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            LOGGER.severe("\n\n\n" + Database.class.getName() + " - database connection pool creation FAILURE\n");
+            e.printStackTrace();
         }
 
         createTable();
         populateDatabase();
 
-        LOGGER.info("\n\n\n"+Database.class.getName() +" - database created SUCCESSFUL\n\n\n");
+        LOGGER.info("\n\n\n" + Database.class.getName() + " - database created SUCCESSFUL\n\n\n");
+    }
+
+    public static Database getInstance() {
+        return Database.INSTANCE;
     }
 
     private void createTable() {
@@ -66,11 +72,13 @@ public class Database {
             Connection connection = connectionPool.getConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
-            LOGGER.info("\n\n\n"+Database.class.getName() +" - update SUCCESSFUL\n" + sql + "\n\n\n");
+            LOGGER.info("\n\n\n" + Database.class.getName() + " - database update SUCCESSFUL" +
+                    "\nsql: " + sql + "\n\n\n");
 
             connection.close();
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+        } catch (Exception e) {
+            LOGGER.severe("\n\n\n" + Database.class.getName() + " - database update FAILURE\n");
+            e.printStackTrace();
         }
     }
 
@@ -82,11 +90,14 @@ public class Database {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(sql);
             resultsMap = resultSetToList(results);
-            LOGGER.info("\n\n\n"+Database.class.getName() +" - query SUCCESSFUL\n" + sql + "\n" + results + "\n\n\n");
+            LOGGER.info("\n\n\n" + Database.class.getName() + " - database query SUCCESSFUL" +
+                    "\nsql: " + sql +
+                    "\nresults: " + results + "\n\n\n");
 
             connection.close();
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+        } catch (Exception e) {
+            LOGGER.severe("\n\n\n" + Database.class.getName() + " - database query FAILURE\n");
+            e.printStackTrace();
         }
 
         return resultsMap;

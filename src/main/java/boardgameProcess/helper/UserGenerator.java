@@ -33,6 +33,8 @@ public class UserGenerator {
 
         // Admin USer - is allowed to do anything
         addUser(engine, "admin", "admin", "Camunda", "BPM");
+
+        // add users to admin group
         if (addGroup(engine, Groups.CAMUNDA_ADMIN, "Camunda BPM Admin", "admin", "demo")) {
             // create ADMIN authorizations on all built-in resources
             for (Resource resource : Resources.values()) {

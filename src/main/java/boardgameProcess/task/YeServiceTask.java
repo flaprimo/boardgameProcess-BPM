@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import boardgameProcess.helper.Database;
+import boardgameProcess.helper.Email;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.model.bpmn.instance.FlowElement;
@@ -31,7 +32,8 @@ import org.camunda.bpm.model.bpmn.instance.FlowElement;
 public class YeServiceTask implements JavaDelegate {
 
   private final static Logger LOGGER = Logger.getLogger(YeServiceTask.class.getName());
-  private static Database database = Database.INSTANCE;
+  private static Database database = Database.getInstance();
+  private static Email email = Email.getInstance();
 
   /**
    * this method will be invoked by the process engine when the service task is executed.
@@ -50,6 +52,11 @@ public class YeServiceTask implements JavaDelegate {
         System.out.print(rowEntry.getKey() + " = " + rowEntry.getValue() + ", ");
       }
     }
+
+    email.sendEmail("klaus.teuber@catanftw.de", "boardgame@shop.com", "Order cancellation",
+            "Hi!\n" +
+                    "we are sorry to inform you that the order for your game has been cancelled!\n" +
+                    "Sincerely,\nYour favorite boardgame shop!");
 
     // log status
     LOGGER.info("\n\n\nYEEEE Service Task '"+serviceTask.getName() +"' is eddaje!\n\n\n");
