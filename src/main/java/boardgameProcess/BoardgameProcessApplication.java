@@ -43,6 +43,7 @@ import org.camunda.bpm.engine.ProcessEngine;
  */
 @ProcessApplication
 public class BoardgameProcessApplication extends ServletProcessApplication {
+    private static final String PROCESS_DEFINITION_KEY = "boardgameProcess";
 
   /**
    * The {@literal @}PostDeploy method is invoked when the deployment of all BPMN 2.0 processes is complete.
@@ -54,9 +55,7 @@ public class BoardgameProcessApplication extends ServletProcessApplication {
     // create default user
     UserGenerator.createDefaultUsers(processEngine);
 
-    // start a new instance of our process
-    processEngine.getRuntimeService()
-      .startProcessInstanceByKey("boardgameProcess");
+    //processEngine.getRuntimeService().startProcessInstanceByMessage("orderReceived");
 
   }
 

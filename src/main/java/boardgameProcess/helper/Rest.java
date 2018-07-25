@@ -29,12 +29,12 @@ public class Rest {
         return Rest.INSTANCE;
     }
 
-    public String post(String resource, ArrayList<NameValuePair> parameters) {
+    public String post(String resource, ArrayList<NameValuePair> parameters) throws Exception {
         String url = apiEndpoint + resource;
         HttpPost request = new HttpPost(url);
         String responseContent = null;
 
-        try {
+//        try {
             if (parameters != null)
                 request.setEntity(new UrlEncodedFormEntity(parameters, "UTF-8"));
 
@@ -50,10 +50,10 @@ public class Rest {
 
                 LOGGER.info("\n\n\n" + Rest.class.getName() + " - post request SUCCESSFUL\n\n\n");
             }
-        } catch (Exception e) {
-            LOGGER.severe("\n\n\n" + Rest.class.getName() + " - post request FAILURE\n");
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            LOGGER.severe("\n\n\n" + Rest.class.getName() + " - post request FAILURE\n");
+//            e.printStackTrace();
+//        }
 
         return responseContent;
     }

@@ -44,7 +44,15 @@ public class Database {
                 "name varchar(100)," +
                 "category varchar(100)," +
                 "price double," +
-                "quantity integer)";
+                "quantity integer);";
+
+        sql += "CREATE TABLE Orders" +
+                "(id int auto_increment primary key," +
+                "name varchar(100)," +
+                "email varchar(100)," +
+                "game varchar(100)," +
+                "address varchar(100)," +
+                "active boolean);";
 
         update(sql);
     }
@@ -74,41 +82,24 @@ public class Database {
         }
     }
 
-    public List<Map<String, Object>> query(String sql) {
-        List<Map<String, Object>> resultsMap = null;
+    public ResultSet query(String sql) {
+        ResultSet resultsMap = null;
 
         try {
             Connection connection = connectionPool.getConnection();
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(sql);
-            resultsMap = resultSetToList(results);
+            resultsMap = results;
             LOGGER.info("\n\n\n" + Database.class.getName() + " - database query SUCCESSFUL" +
                     "\nsql: " + sql +
                     "\nresults: " + results + "\n\n\n");
 
-            connection.close();
+            //connection.close();
         } catch (Exception e) {
             LOGGER.severe("\n\n\n" + Database.class.getName() + " - database query FAILURE\n");
             e.printStackTrace();
         }
 
         return resultsMap;
-    }
-
-    private List<Map<String, Object>> resultSetToList(ResultSet rs) throws SQLException {
-        ResultSetMetaData md = rs.getMetaData();
-        int columns = md.getColumnCount();
-        List<Map<String, Object>> rows = new ArrayList<>();
-
-        while (rs.next()) {
-            Map<String, Object> row = new HashMap<>(columns);
-
-            for (int i = 1; i <= columns; ++i)
-                row.put(md.getColumnName(i), rs.getObject(i));
-
-            rows.add(row);
-        }
-
-        return rows;
     }
 }

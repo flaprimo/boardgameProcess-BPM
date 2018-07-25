@@ -18,6 +18,9 @@ public class Email {
             properties = System.getProperties();
             properties.load(getClass().getClassLoader().getResourceAsStream("email.properties"));
             properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+            properties.put("mail.smtp.connectiontimeout", "5000");
+            properties.put("mail.smtp.timeout", "5000");
 
             session = Session.getInstance(
                     properties,
