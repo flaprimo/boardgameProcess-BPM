@@ -40,11 +40,11 @@ public class NotifyDeliveryToDeposit implements JavaDelegate {
             throw new Exception("Active order not found!");
         }
 
-//        email.sendEmail(customerEmail, "boardgame@shop.com", "Order cancellation",
-//                String.format("Hi %s!\n" +
-//                        "since we didn't find you at home (%s)," +
-//                        "we delivered the game '%s' to our nearest deposit from your home!\n" +
-//                        "Sincerly,\nYour favorite boardgame shop!", customerName, address, game));
+        email.sendEmail(customerEmail, "boardgame@shop.com", "Game delivered to deposit",
+                String.format("Hi %s!\n" +
+                        "since we didn't find you at home (%s), " +
+                        "we delivered the game '%s' to our nearest deposit from your home!\n\n" +
+                        "Sincerly,\nYour favorite boardgame shop!", customerName, address, game));
 
         LOGGER.info(String.format("\n\n\n Task '%s' completed SUCCESSFUL\n" +
                         "user (name='%s', customerEmail='%s', address='%s') notified of order (game='%s') shipment to nearest deposit\n\n\n",

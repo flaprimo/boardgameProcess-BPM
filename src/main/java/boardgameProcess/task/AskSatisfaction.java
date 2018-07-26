@@ -38,10 +38,10 @@ public class AskSatisfaction implements JavaDelegate {
             throw new Exception("Active order not found!");
         }
 
-//        email.sendEmail(customerEmail, "boardgame@shop.com", "Order cancellation",
-//                String.format("Hi %s!\n" +
-//                        "we would like to ask you some feedback about your last order for the game '%s'.\n" +
-//                        "Sincerly,\nYour favorite boardgame shop!", customerName, game));
+        email.sendEmail(customerEmail, "boardgame@shop.com", "What do you think about us?",
+                String.format("Hi %s!\n" +
+                        "we would like to ask you some feedback about your last order for the game '%s'.\n\n" +
+                        "Sincerly,\nYour favorite boardgame shop!", customerName, game));
 
         LOGGER.info(String.format("\n\n\n Task '%s' completed SUCCESSFUL\n" +
                         "ask user (name='%s', customerEmail='%s') for the order (game='%s') satisfaction\n\n\n",

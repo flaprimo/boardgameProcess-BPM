@@ -38,10 +38,10 @@ public class NotifyOrderCancellation implements JavaDelegate {
             throw new Exception("Active order not found!");
         }
 
-//        email.sendEmail(customerEmail, "boardgame@shop.com", "Order cancellation",
-//                String.format("Hi %s!\n" +
-//                        "we are sorry to inform you that your order for the game '%s' has been cancelled!\n\n" +
-//                        "Sincerly,\nYour favorite boardgame shop!", customerName, game));
+        email.sendEmail(customerEmail, "boardgame@shop.com", "Order cancellation",
+                String.format("Hi %s!\n" +
+                        "we are sorry to inform you that your order for the game '%s' has been cancelled!\n\n" +
+                        "Sincerly,\nYour favorite boardgame shop!", customerName, game));
 
         LOGGER.info(String.format("\n\n\n Task '%s' completed SUCCESSFUL\n" +
                         "user (name='%s', customerEmail='%s') notified of order (game='%s') cancellation\n\n\n",

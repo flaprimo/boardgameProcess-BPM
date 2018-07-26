@@ -40,11 +40,11 @@ public class NotifyShipment implements JavaDelegate {
             throw new Exception("Active order not found!");
         }
 
-//        email.sendEmail(customerEmail, "boardgame@shop.com", "Order cancellation",
-//                String.format("Hi %s!\n" +
-//                        "we are happy to inform you that your order for the game '%s' has been shipped!\n" +
-//                        "it will be delivered to the following address: %s" +
-//                        "Sincerly,\nYour favorite boardgame shop!", customerName, game, address));
+        email.sendEmail(customerEmail, "boardgame@shop.com", "Game has been shipped",
+                String.format("Hi %s!\n" +
+                        "we are happy to inform you that your order for the game '%s' has been shipped!\n" +
+                        "it will be delivered to the following address: %s\n\n" +
+                        "Sincerly,\nYour favorite boardgame shop!", customerName, game, address));
 
         LOGGER.info(String.format("\n\n\n Task '%s' completed SUCCESSFUL\n" +
                         "user (name='%s', customerEmail='%s', address='%s') notified of order (game='%s') shipment\n\n\n",
