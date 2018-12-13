@@ -5,6 +5,8 @@ https://github.com/camunda/camunda-bpm-examples/tree/master/deployment/servlet-p
 
 This example demonstrates how to deploy a simple servlet process application.
 
+An api endpoint to use in conjuction with this example is available here: https://github.com/flaprimo/api_endpoint_BPM
+
 How to use it
 -----------------------------
 
